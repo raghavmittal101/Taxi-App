@@ -72,19 +72,23 @@ class _TaxiMapState extends State<TaxiMap> {
         },
         child: GoogleMap(
           initialCameraPosition:
-              CameraPosition(target: LatLng(17.0, 24.0), zoom: 8.0),
+              // Raghav: change required
+              // zoom camera to current location of the user. To do this, we need to get GPS
+              // coordinates or coordinates from the source location option by using 
+              // `LocationController.getCurrentLocation()` function.
+              CameraPosition(target: LatLng(28.0, 77.0), zoom: 8.0),
           onMapCreated: (controller) async {
             this.controller = controller;
             BlocProvider.of<TaxiBookingBloc>(context)
-                .add(TaxiBookingStartEvent());
+                .add(TaxiBookingStartEvent()); // get list of available taxis
             currentLocation = await LocationController.getCurrentLocation();
-            controller.animateCamera(
-                CameraUpdate.newLatLngZoom(currentLocation.position, 12));
+            controller.animateCamera( // move camera to current location of user
+                CameraUpdate.newLatLngZoom(currentLocation.position, 1));
             BlocProvider.of<TaxiBookingBloc>(context)
                 .add(TaxiBookingStartEvent());
           },
           myLocationButtonEnabled: false,
-          markers: markers,
+          markers: markers, //raghav: here we need to edit
           polylines: polylines,
           circles: circles,
         ),

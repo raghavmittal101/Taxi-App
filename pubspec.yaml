@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_maps_flutter: ^0.5.21+8
+  search_map_place: ^0.3.0
   flutter_bloc:
   bloc:
   equatable: ^0.6.1  

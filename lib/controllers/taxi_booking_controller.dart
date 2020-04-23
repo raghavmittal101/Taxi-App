@@ -23,6 +23,7 @@ class TaxiBookingController {
 
   static Future<List<Taxi>> getTaxisAvailable() async {
     GoogleLocation location = await LocationController.getCurrentLocation();
+    // Raghav: Here we keep list of available taxis with their loctions.
     const double maxRadius = 200 / 111300;
     Random random = Random();
     List<Taxi> taxis = List<Taxi>.generate(10, (index) {
