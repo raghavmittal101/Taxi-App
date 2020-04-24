@@ -23,6 +23,7 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
     TaxiBooking taxiBooking = (BlocProvider.of<TaxiBookingBloc>(context).state
             as DetailsNotFilledState)
         .booking;
+    // raghav: remove noOfPersons and bookingTime features
     noOfPersons = taxiBooking.noOfPersons;
     bookingTime = taxiBooking.bookingTime;
     source = taxiBooking.source;
@@ -51,15 +52,18 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
                   SizedBox(
                     height: 24.0,
                   ),
+                  // raghav: remove soure?.areaDetails in order to get input from user
                   buildInputWidget(source?.areaDetails, "hint", () {}),
                   SizedBox(
                     height: 16.0,
                   ),
+                  // raghav: remove destination?.areaDetails in order to get input from user
                   buildInputWidget(destination?.areaDetails,
                       "Enter your destination", () {}),
                   SizedBox(
                     height: 36.0,
                   ),
+                  // raghav: remove seat and time functionality
                   Text(
                     "Seat and Time",
                     style: Theme.of(context).textTheme.headline,
@@ -95,6 +99,7 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
                   onTap: () {
                     BlocProvider.of<TaxiBookingBloc>(context).add(
                         DetailsSubmittedEvent(
+                          // remove bookingTime and noOfPersons features
                             bookingTime: bookingTime,
                             destination: destination,
                             source: source,
@@ -228,6 +233,7 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
   }
 
   Widget buildInputWidget(String text, String hint, Function() onTap) {
+    // raghav: here we need to create a input field for getting address from user
     return Container(
       padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
       decoration: BoxDecoration(
