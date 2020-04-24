@@ -104,9 +104,8 @@ class _DestinationSelctionWidgetState extends State<DestinationSelctionWidget>
                 ),
                 padding: EdgeInsets.all(8.0),
                 child: Icon(
-                  location.locationType == UserLocationType.Home
-                      ? Icons.home
-                      : Icons.work,
+                  // raghav: `home` and `work` icons changed to `place`
+                  Icons.place,
                   size: 22.0,
                   color: Colors.black54,
                 ),

@@ -13,6 +13,7 @@ class UserLocationController {
     return null;
   }
 
+  // raghav: change the locations to the locations which we will use for demo
   static Future<List<UserLocation>> getSavedLocations() async {
     return [
       UserLocation.named(

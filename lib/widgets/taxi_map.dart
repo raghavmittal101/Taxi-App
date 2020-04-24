@@ -88,7 +88,7 @@ class _TaxiMapState extends State<TaxiMap> {
                 .add(TaxiBookingStartEvent());
           },
           myLocationButtonEnabled: false,
-          markers: markers, //raghav: here we need to edit
+          markers: markers, //raghav: here we need to edit to add zone info with markers
           polylines: polylines,
           circles: circles,
         ),
