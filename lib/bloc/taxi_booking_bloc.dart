@@ -38,9 +38,10 @@ class TaxiBookingBloc extends Bloc<TaxiBookingEvent, TaxiBookingState> {
       yield TaxiBookingLoadingState(state: TaxiNotSelectedState(booking: null));
       await Future.delayed(Duration(seconds: 1));
       await TaxiBookingStorage.addDetails(TaxiBooking.named(
+        // raghav: remove noOfPersons and bookingTime feature
         source: event.source,
         destination: event.destination,
-        noOfPersons: event.noOfPersons,
+        noOfPersons: event.noOfPersons, 
         bookingTime: event.bookingTime,
       ));
       TaxiBooking booking = await TaxiBookingStorage.getTaxiBooking();

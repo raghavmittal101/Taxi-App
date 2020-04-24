@@ -15,6 +15,7 @@ class TaxiBookingTaxisWidget extends StatefulWidget {
 class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
   TaxiBooking taxiBooking;
   final List<TaxiType> taxiTypes = [
+    // raghav: remove taxi types
     TaxiType.Standard,
     TaxiType.Premium,
     TaxiType.Platinum
@@ -46,16 +47,18 @@ class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
                   SizedBox(
                     height: 20.0,
                   ),
-                  Text(
-                    "Choose Taxi",
-                    style: Theme.of(context).textTheme.headline,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  // raghav: removed `choose taxi`
+                  // Text( 
+                  //   "Choose Taxi",
+                  //   style: Theme.of(context).textTheme.headline,
+                  //   maxLines: 1,
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
                   SizedBox(
                     height: 16.0,
                   ),
-                  buildTaxis(),
+                  // raghav: removed buildtaxi feature
+                  // buildTaxis(),
                   buildPriceDetails(),
                   SizedBox(
                     height: 16.0,
@@ -107,47 +110,47 @@ class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
 
   TaxiType selectedTaxiType;
 
-  Widget buildTaxis() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: taxiTypes
-          .map((val) => GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedTaxiType = val;
-                  });
-                },
-                child: Opacity(
-                  opacity: val == selectedTaxiType ? 1.0 : 0.5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(16.0),
-                          child: Image.asset(
-                            "images/taxi.jpg",
-                            height: MediaQuery.of(context).size.width / 6,
-                            width: MediaQuery.of(context).size.width / 6,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 12.0,
-                        ),
-                        Text(
-                          val.toString().replaceFirst("TaxiType.", ""),
-                          style: Theme.of(context).textTheme.title,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ))
-          .toList(),
-    );
-  }
+  // Widget buildTaxis() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     children: taxiTypes
+  //         .map((val) => GestureDetector(
+  //               onTap: () {
+  //                 setState(() {
+  //                   selectedTaxiType = val;
+  //                 });
+  //               },
+  //               child: Opacity(
+  //                 opacity: val == selectedTaxiType ? 1.0 : 0.5,
+  //                 child: Padding(
+  //                   padding: const EdgeInsets.all(12.0),
+  //                   child: Column(
+  //                     mainAxisSize: MainAxisSize.min,
+  //                     children: <Widget>[
+  //                       ClipRRect(
+  //                         borderRadius: BorderRadius.circular(16.0),
+  //                         child: Image.asset(
+  //                           "images/taxi.jpg",
+  //                           height: MediaQuery.of(context).size.width / 6,
+  //                           width: MediaQuery.of(context).size.width / 6,
+  //                           fit: BoxFit.cover,
+  //                         ),
+  //                       ),
+  //                       SizedBox(
+  //                         height: 12.0,
+  //                       ),
+  //                       Text(
+  //                         val.toString().replaceFirst("TaxiType.", ""),
+  //                         style: Theme.of(context).textTheme.title,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //             ))
+  //         .toList(),
+  //   );
+  // }
 
   Widget buildPriceDetails() {
     return Column(
@@ -159,6 +162,8 @@ class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            // raghav: we need to calculate real distance and prices here
+            // we need to use an existing function from taxi_nooking_controller` to calculate price
             buildIconText("21 km", Icons.directions),
             buildIconText("1-3", Icons.person_outline),
             buildIconText("\$150", Icons.monetization_on),
