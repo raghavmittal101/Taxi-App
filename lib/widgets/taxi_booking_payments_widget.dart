@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_event.dart';
-import 'package:taxi_app/bloc/taxi_booking_state.dart';
+// import 'package:taxi_app/bloc/taxi_booking_state.dart';
 import 'package:taxi_app/models/payment_method.dart';
 import 'package:taxi_app/widgets/rounded_button.dart';
 
@@ -17,12 +17,7 @@ class _TaxiBookingPaymentsWidgetState extends State<TaxiBookingPaymentsWidget> {
   PaymentMethod selectedMethod;
 
   @override
-  void initState() {
-    super.initState();
-    methods = (BlocProvider.of<TaxiBookingBloc>(context).state
-            as PaymentNotInitializedState)
-        .methodsAvaiable;
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +49,10 @@ class _TaxiBookingPaymentsWidgetState extends State<TaxiBookingPaymentsWidget> {
                       shrinkWrap: true,
                       itemCount: methods.length,
                     ),
-                    Text(
-                      "Promo Code",
-                      style: Theme.of(context).textTheme.headline,
-                    ),
+                    
                     SizedBox(
                       height: 18.0,
                     ),
-                    buildInputWidget(null, "Add promo code", () {})
                   ],
                 ),
               ),
@@ -79,16 +70,6 @@ class _TaxiBookingPaymentsWidgetState extends State<TaxiBookingPaymentsWidget> {
               SizedBox(
                 width: 18.0,
               ),
-              Expanded(
-                flex: 2,
-                child: RoundedButton(
-                  text: "Confirm Payment",
-                  onTap: () {
-                    BlocProvider.of<TaxiBookingBloc>(context)
-                        .add(PaymentMadeEvent(paymentMethod: selectedMethod));
-                  },
-                ),
-              )
             ],
           ),
         ],
@@ -152,25 +133,6 @@ class _TaxiBookingPaymentsWidgetState extends State<TaxiBookingPaymentsWidget> {
                   )
           ],
         ),
-      ),
-    );
-  }
-
-  Widget buildInputWidget(String text, String hint, Function() onTap) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
-      decoration: BoxDecoration(
-        color: Color(0xffeeeeee).withOpacity(0.5),
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: Text(
-        text ?? hint,
-        style: Theme.of(context)
-            .textTheme
-            .title
-            .copyWith(color: text == null ? Colors.black45 : Colors.black),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
       ),
     );
   }

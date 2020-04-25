@@ -5,7 +5,6 @@ import 'package:taxi_app/bloc/taxi_booking_state.dart';
 import 'package:taxi_app/widgets/loading_shimmer.dart';
 import 'package:taxi_app/widgets/taxi_booking_details_widget.dart';
 import 'package:taxi_app/widgets/taxi_booking_not_confirmed_widget.dart';
-import 'package:taxi_app/widgets/taxi_booking_payments_widget.dart';
 import 'package:taxi_app/widgets/taxi_booking_state_widget.dart';
 import 'package:taxi_app/widgets/taxi_booking_taxis_widget.dart';
 
@@ -81,8 +80,6 @@ class _TaxiBookingHomeWidgetState extends State<TaxiBookingHomeWidget>
                                   return TaxiBookingDetailsWidget();
                                 case TaxiNotSelectedState:
                                   return TaxiBookingTaxisWidget();
-                                case PaymentNotInitializedState:
-                                  return TaxiBookingPaymentsWidget();
                                 case TaxiNotConfirmedState:
                                   return TaxiBookingNotConfirmedWidget();
                                 default:

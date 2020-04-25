@@ -24,11 +24,7 @@ class TaxiBookingStateWidget extends StatelessWidget {
             break;
           case TaxiNotSelectedState:
             selectedTab = 2;
-            title = "Choose Ride";
-            break;
-          case PaymentNotInitializedState:
-            selectedTab = 3;
-            title = "Payment Method";
+            title = "Confirm Details";
             break;
           case TaxiNotConfirmedState:
             selectedTab = 4;
@@ -78,12 +74,6 @@ class TaxiBookingStateWidget extends StatelessWidget {
                   ),
                 ),
                 buildTab(context, "3", selectedTab >= 3),
-                Expanded(
-                  child: DashedLine(
-                    color: Colors.white.withOpacity(0.3),
-                  ),
-                ),
-                buildTab(context, "4", selectedTab >= 4),
               ]),
               SizedBox(
                 height: 12.0,

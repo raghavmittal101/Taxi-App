@@ -57,6 +57,10 @@ class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
                     height: 12.0,
                   ),
                   buildLocation(taxiBooking.destination.areaDetails, "To"),
+                  SizedBox(
+                    height: 28.0,
+                  ),
+                  buildPaymentMethod()
                 ],
               ),
             ),
@@ -160,4 +164,46 @@ class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
       ],
     );
   }
+
+  Widget buildPaymentMethod() {
+    return Container(
+      child: Container(
+        padding: EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+            color: Color(0xffeeeeee).withOpacity(0.5),
+            borderRadius: BorderRadius.circular(12.0)),
+        child: Row(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16.0),
+              child: Icon(
+                Icons.attach_money,
+                size: 56.0,
+              ),
+            ),
+            SizedBox(
+              width: 16.0,
+            ),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text(
+                    "Payment in cash",
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                  SizedBox(
+                    height: 4.0,
+                  ),
+                  
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
+
