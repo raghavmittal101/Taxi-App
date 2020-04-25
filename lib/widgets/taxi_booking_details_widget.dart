@@ -15,17 +15,12 @@ class TaxiBookingDetailsWidget extends StatefulWidget {
 
 class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
   GoogleLocation source, destination;
-  int noOfPersons;
-  DateTime bookingTime;
   @override
   void initState() {
     super.initState();
     TaxiBooking taxiBooking = (BlocProvider.of<TaxiBookingBloc>(context).state
             as DetailsNotFilledState)
         .booking;
-    // raghav: remove noOfPersons and bookingTime features
-    noOfPersons = taxiBooking.noOfPersons;
-    bookingTime = taxiBooking.bookingTime;
     source = taxiBooking.source;
     destination = taxiBooking.destination;
   }
@@ -61,21 +56,9 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
                   buildInputWidget(destination?.areaDetails,
                       "Enter your destination", () {}),
                   SizedBox(
-                    height: 36.0,
+                    height: 84.0,
                   ),
-                  // raghav: remove seat and time functionality
-                  Text(
-                    "Seat and Time",
-                    style: Theme.of(context).textTheme.headline,
-                  ),
-                  SizedBox(
-                    height: 24.0,
-                  ),
-                  buildPersonSelector(),
-                  SizedBox(
-                    height: 24.0,
-                  ),
-                  buildTimeSelector()
+                  
                 ],
               ),
             ),
@@ -99,11 +82,8 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
                   onTap: () {
                     BlocProvider.of<TaxiBookingBloc>(context).add(
                         DetailsSubmittedEvent(
-                          // remove bookingTime and noOfPersons features
-                            bookingTime: bookingTime,
                             destination: destination,
-                            source: source,
-                            noOfPersons: noOfPersons));
+                            source: source,));
                   },
                 ),
               )
@@ -111,82 +91,6 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget buildPersonSelector() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(
-          "Need Seat",
-          style: Theme.of(context).textTheme.title,
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [1, 2, 3]
-              .map((val) => GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      noOfPersons = val;
-                    });
-                  },
-                  child: buildContainer("$val", val == noOfPersons)))
-              .toList(),
-        )
-      ],
-    );
-  }
-
-  Widget buildTimeSelector() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              "Schedule Time",
-              style: Theme.of(context).textTheme.title,
-            ),
-            bookingTime == null
-                ? Container()
-                : Text(
-                    "${bookingTime.day}-${bookingTime.month}-${bookingTime.year}",
-                    style: Theme.of(context).textTheme.subtitle,
-                  )
-          ],
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            buildTimeContainer(
-                text: "Now",
-                enabled: bookingTime == null,
-                onTap: () {
-                  setState(() {
-                    bookingTime = null;
-                  });
-                }),
-            buildTimeContainer(
-                iconData: Icons.timer,
-                enabled: bookingTime != null,
-                onTap: () async {
-                  DateTime time = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2030),
-                    initialDate: DateTime.now()..add(Duration(days: 1)),
-                    initialDatePickerMode: DatePickerMode.day,
-                  );
-                  setState(() {
-                    bookingTime = time;
-                  });
-                })
-          ],
-        )
-      ],
     );
   }
 
@@ -203,35 +107,7 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
               color: enabled ? Colors.white : Colors.black, fontSize: 15.0),
         ));
   }
-
-  Widget buildTimeContainer(
-      {String text,
-      IconData iconData,
-      bool enabled = false,
-      Function() onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 6.0),
-          padding: EdgeInsets.all(12.0),
-          decoration: BoxDecoration(
-              color: enabled ? Colors.black : Color(0xffeeeeee),
-              borderRadius: BorderRadius.circular(12.0)),
-          child: text != null
-              ? Text(
-                  "$text",
-                  style: Theme.of(context).textTheme.headline.copyWith(
-                      color: enabled ? Colors.white : Colors.black,
-                      fontSize: 15.0),
-                )
-              : Icon(
-                  iconData,
-                  color: enabled ? Colors.white : Colors.black,
-                  size: 18.0,
-                )),
-    );
-  }
-
+  
   Widget buildInputWidget(String text, String hint, Function() onTap) {
     // raghav: here we need to create a input field for getting address from user
     return Container(

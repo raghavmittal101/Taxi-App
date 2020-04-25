@@ -26,17 +26,14 @@ class DestinationSelectedEvent extends TaxiBookingEvent {
 class DetailsSubmittedEvent extends TaxiBookingEvent {
   final GoogleLocation source;
   final GoogleLocation destination;
-  final int noOfPersons;
-  final DateTime bookingTime;
 
   DetailsSubmittedEvent(
       {@required this.source,
       @required this.destination,
-      @required this.noOfPersons,
-      @required this.bookingTime});
+     });
 
   @override
-  List<Object> get props => [source, destination, noOfPersons, bookingTime];
+  List<Object> get props => [source, destination];
 }
 
 class TaxiSelectedEvent extends TaxiBookingEvent {

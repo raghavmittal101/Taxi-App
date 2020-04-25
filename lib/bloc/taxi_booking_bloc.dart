@@ -30,7 +30,7 @@ class TaxiBookingBloc extends Bloc<TaxiBookingEvent, TaxiBookingState> {
       GoogleLocation destination =
           await LocationController.getLocationfromId(event.destination);
       await TaxiBookingStorage.addDetails(TaxiBooking.named(
-          source: source, destination: destination, noOfPersons: 1));
+          source: source, destination: destination));
       TaxiBooking taxiBooking = await TaxiBookingStorage.getTaxiBooking();
       yield DetailsNotFilledState(booking: taxiBooking);
     }
@@ -38,11 +38,8 @@ class TaxiBookingBloc extends Bloc<TaxiBookingEvent, TaxiBookingState> {
       yield TaxiBookingLoadingState(state: TaxiNotSelectedState(booking: null));
       await Future.delayed(Duration(seconds: 1));
       await TaxiBookingStorage.addDetails(TaxiBooking.named(
-        // raghav: remove noOfPersons and bookingTime feature
         source: event.source,
-        destination: event.destination,
-        noOfPersons: event.noOfPersons, 
-        bookingTime: event.bookingTime,
+        destination: event.destination
       ));
       TaxiBooking booking = await TaxiBookingStorage.getTaxiBooking();
       yield TaxiNotSelectedState(
