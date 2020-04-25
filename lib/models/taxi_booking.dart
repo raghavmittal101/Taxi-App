@@ -1,13 +1,11 @@
 import 'package:taxi_app/models/payment_method.dart';
 
 import 'google_location.dart';
-import 'taxi_type.dart';
 
 class TaxiBooking {
   final String id;
   final GoogleLocation source;
   final GoogleLocation destination;
-  final TaxiType taxiType;
   final double estimatedPrice;
   final PaymentMethod paymentMethod;
   final String promoApplied;
@@ -16,7 +14,6 @@ class TaxiBooking {
       this.id,
       this.source,
       this.destination,
-      this.taxiType,
       this.estimatedPrice,
       this.paymentMethod,
       this.promoApplied);
@@ -25,7 +22,6 @@ class TaxiBooking {
     this.id,
     this.source,
     this.destination,
-    this.taxiType,
     this.estimatedPrice,
     this.paymentMethod,
     this.promoApplied,
@@ -38,7 +34,6 @@ class TaxiBooking {
         destination: booking.destination ?? destination,
         paymentMethod: booking.paymentMethod ?? paymentMethod,
         promoApplied: booking.promoApplied ?? promoApplied,
-        estimatedPrice: booking.estimatedPrice ?? estimatedPrice,
-        taxiType: booking.taxiType ?? taxiType);
+        estimatedPrice: booking.estimatedPrice ?? estimatedPrice);
   }
 }

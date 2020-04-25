@@ -53,7 +53,7 @@ class TaxiBookingBloc extends Bloc<TaxiBookingEvent, TaxiBookingState> {
       TaxiBooking prevBooking = await TaxiBookingStorage.getTaxiBooking();
       double price = await TaxiBookingController.getPrice(prevBooking);
       await TaxiBookingStorage.addDetails(
-          TaxiBooking.named(taxiType: event.taxiType, estimatedPrice: price));
+          TaxiBooking.named(estimatedPrice: price));
       TaxiBooking booking = await TaxiBookingStorage.getTaxiBooking();
       List<PaymentMethod> methods = await PaymentMethodController.getMethods();
       yield PaymentNotInitializedState(

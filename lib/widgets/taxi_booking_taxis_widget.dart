@@ -14,22 +14,12 @@ class TaxiBookingTaxisWidget extends StatefulWidget {
 
 class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
   TaxiBooking taxiBooking;
-  final List<TaxiType> taxiTypes = [
-    // raghav: remove taxi types
-    TaxiType.Standard,
-    TaxiType.Premium,
-    TaxiType.Platinum
-  ];
   @override
   void initState() {
     super.initState();
     taxiBooking = (BlocProvider.of<TaxiBookingBloc>(context).state
             as TaxiNotSelectedState)
         .booking;
-    selectedTaxiType = taxiBooking.taxiType;
-    if (selectedTaxiType == null) {
-      selectedTaxiType = TaxiType.Standard;
-    }
   }
 
   @override
@@ -47,13 +37,6 @@ class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
                   SizedBox(
                     height: 20.0,
                   ),
-                  // raghav: removed `choose taxi`
-                  // Text( 
-                  //   "Choose Taxi",
-                  //   style: Theme.of(context).textTheme.headline,
-                  //   maxLines: 1,
-                  //   overflow: TextOverflow.ellipsis,
-                  // ),
                   SizedBox(
                     height: 16.0,
                   ),
@@ -97,7 +80,7 @@ class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
                   text: "Request Trip",
                   onTap: () {
                     BlocProvider.of<TaxiBookingBloc>(context)
-                        .add(TaxiSelectedEvent(taxiType: selectedTaxiType));
+                        .add(TaxiSelectedEvent());
                   },
                 ),
               )
@@ -109,48 +92,6 @@ class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
   }
 
   TaxiType selectedTaxiType;
-
-  // Widget buildTaxis() {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //     children: taxiTypes
-  //         .map((val) => GestureDetector(
-  //               onTap: () {
-  //                 setState(() {
-  //                   selectedTaxiType = val;
-  //                 });
-  //               },
-  //               child: Opacity(
-  //                 opacity: val == selectedTaxiType ? 1.0 : 0.5,
-  //                 child: Padding(
-  //                   padding: const EdgeInsets.all(12.0),
-  //                   child: Column(
-  //                     mainAxisSize: MainAxisSize.min,
-  //                     children: <Widget>[
-  //                       ClipRRect(
-  //                         borderRadius: BorderRadius.circular(16.0),
-  //                         child: Image.asset(
-  //                           "images/taxi.jpg",
-  //                           height: MediaQuery.of(context).size.width / 6,
-  //                           width: MediaQuery.of(context).size.width / 6,
-  //                           fit: BoxFit.cover,
-  //                         ),
-  //                       ),
-  //                       SizedBox(
-  //                         height: 12.0,
-  //                       ),
-  //                       Text(
-  //                         val.toString().replaceFirst("TaxiType.", ""),
-  //                         style: Theme.of(context).textTheme.title,
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ),
-  //             ))
-  //         .toList(),
-  //   );
-  // }
 
   Widget buildPriceDetails() {
     return Column(

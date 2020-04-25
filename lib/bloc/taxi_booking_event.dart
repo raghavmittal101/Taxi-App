@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxi_app/models/google_location.dart';
 import 'package:taxi_app/models/payment_method.dart';
-import 'package:taxi_app/models/taxi_type.dart';
 
 abstract class TaxiBookingEvent extends Equatable {
   TaxiBookingEvent();
@@ -37,12 +36,9 @@ class DetailsSubmittedEvent extends TaxiBookingEvent {
 }
 
 class TaxiSelectedEvent extends TaxiBookingEvent {
-  final TaxiType taxiType;
-
-  TaxiSelectedEvent({@required this.taxiType});
 
   @override
-  List<Object> get props => [taxiType];
+  List<Object> get props => [];
 }
 
 class PaymentMadeEvent extends TaxiBookingEvent {
