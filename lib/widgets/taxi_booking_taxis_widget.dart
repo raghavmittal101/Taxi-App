@@ -4,7 +4,6 @@ import 'package:taxi_app/bloc/taxi_booking_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_event.dart';
 import 'package:taxi_app/bloc/taxi_booking_state.dart';
 import 'package:taxi_app/models/taxi_booking.dart';
-import 'package:taxi_app/models/taxi_type.dart';
 import 'package:taxi_app/widgets/rounded_button.dart';
 
 class TaxiBookingTaxisWidget extends StatefulWidget {
@@ -90,8 +89,6 @@ class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
       ),
     );
   }
-
-  TaxiType selectedTaxiType;
 
   Widget buildPriceDetails() {
     return Column(
