@@ -62,6 +62,8 @@ class TaxiBookingBloc extends Bloc<TaxiBookingEvent, TaxiBookingState> {
       // yield TaxiNotConfirmedState(booking: booking, driver: taxiDriver);
       await Future.delayed(Duration(seconds: 1));
       yield TaxiBookingConfirmedState(booking: booking, driver: taxiDriver);
+      await Future.delayed(Duration(seconds: 8));
+      yield TaxiRideCompleteState();
     }
  
     if (event is TaxiBookingCancelEvent) {
@@ -69,6 +71,7 @@ class TaxiBookingBloc extends Bloc<TaxiBookingEvent, TaxiBookingState> {
       await Future.delayed(Duration(milliseconds: 500));
       List<Taxi> taxis = await TaxiBookingController.getTaxisAvailable();
       yield TaxiBookingNotSelectedState(taxisAvailable: taxis);
+      
     }
     if (event is BackPressedEvent) {
       switch (state.runtimeType) {

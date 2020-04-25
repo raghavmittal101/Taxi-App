@@ -10,6 +10,7 @@ import 'package:taxi_app/widgets/home_drawer.dart';
 import 'package:taxi_app/widgets/taxi_booking_confirmed_widget.dart';
 import 'package:taxi_app/widgets/taxi_booking_home_widget.dart';
 import 'package:taxi_app/widgets/taxi_map.dart';
+import 'package:taxi_app/widgets/taxi_ride_complete_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -48,6 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
             }
             if (state is TaxiBookingConfirmedState) {
               return TaxiBookingConfirmedWidget();
+            }
+            if(state is TaxiRideCompleteState){
+              return TaxiRideCompleteWidget();
             }
             return TaxiBookingHomeWidget();
           }),

@@ -49,8 +49,3 @@ class TaxiBookingCancelEvent extends TaxiBookingEvent {
   @override
   List<Object> get props => null;
 }
-
-class TaxiRideComplete extends TaxiBookingEvent {
-  @override
-  List<Object> get props => null;
-}

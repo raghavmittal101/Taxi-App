@@ -81,3 +81,9 @@ class TaxiBookingConfirmedState extends TaxiBookingState {
   @override
   List<Object> get props => [driver];
 }
+
+class TaxiRideCompleteState extends TaxiBookingState{
+  
+  @override
+  List<Object> get props => null;
+}
