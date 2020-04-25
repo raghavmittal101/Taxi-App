@@ -1,8 +1,4 @@
-import 'dart:math';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:taxi_app/controllers/location_controller.dart';
-import 'package:taxi_app/models/google_location.dart';
 import 'package:taxi_app/models/taxi.dart';
 import 'package:taxi_app/models/taxi_booking.dart';
 import 'package:taxi_app/models/taxi_driver.dart';
@@ -24,24 +20,20 @@ class TaxiBookingController {
   }
 
   static Future<List<Taxi>> getTaxisAvailable() async {
-    GoogleLocation location = await LocationController.getCurrentLocation();
-    // Raghav: Here we keep list of available taxis with their loctions.
-    const double maxRadius = 200 / 111300;
-    Random random = Random();
-    List<Taxi> taxis = List<Taxi>.generate(10, (index) {
-      double u = random.nextDouble();
-      double v = random.nextDouble();
-      double w = maxRadius + sqrt(u);
-      double t = 2 * pi * v;
-      double x1 = w * cos(t);
-      double y1 = w * sin(t);
-      x1 = x1 / cos(y1);
-      LatLng oldPos = location.position;
-      return Taxi.named(
-          id: "$index",
-          position: LatLng(x1 + oldPos.latitude, y1 + oldPos.longitude),
-          title: "Taxi $index");
-    });
+    List<Taxi> taxis = [
+      Taxi.named(id: '1',
+          position: LatLng(27,77),
+          title: "Taxi 1"),
+      Taxi.named(id: '2',
+          position: LatLng(27.01, 78),
+          title: "Taxi 2"),
+      Taxi.named(id: '3',
+          position: LatLng(28, 77),
+          title: "Taxi 3"),
+      Taxi.named(id: '4',
+          position: LatLng(28, 78),
+          title: "Taxi 4")
+    ];
     return taxis;
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxi_app/bloc/taxi_booking_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_event.dart';
 import 'package:taxi_app/controllers/user_location_controller.dart';
@@ -60,86 +59,22 @@ class _DestinationSelctionWidgetState extends State<DestinationSelctionWidget>
               );
             },
             child: Container(
-              height: 150.0,
+              height: 100.0,
               color: Colors.transparent,
-              child: ListView.builder(
-                itemBuilder: (context, index) => SingleChildScrollView(
-                  child: index == 0
-                      ? buildNewDestinationWidget()
-                      : buildDestinationWidget(savedLocations[index - 1]),
-                ),
-                shrinkWrap: true,
-                itemCount: savedLocations.length + 1,
-                scrollDirection: Axis.horizontal,
+              child: buildNewDestinationWidget()
               ),
-            ),
-          );
-  }
-
-  Widget buildDestinationWidget(UserLocation location) {
-    return EaseInWidget(
-        onTap: () {
-          selectDestination(location.position);
-        },
-        child: Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.all(12.0),
-          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 28.0),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black12.withOpacity(0.05),
-                    blurRadius: 15.0,
-                    spreadRadius: 0.05),
-              ],
-              borderRadius: BorderRadius.circular(12.0)),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xffeeeeee),
-                  shape: BoxShape.circle,
-                ),
-                padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  // raghav: `home` and `work` icons changed to `place`
-                  Icons.place,
-                  size: 22.0,
-                  color: Colors.black54,
-                ),
-              ),
-              SizedBox(
-                height: 12.0,
-              ),
-              Text(
-                "${location.locationType.toString().replaceFirst("UserLocationType.", "")}",
-                style: Theme.of(context).textTheme.title,
-              ),
-              SizedBox(
-                height: 4.0,
-              ),
-              Text(
-                "${location.minutesFar} minutes",
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle
-                    .copyWith(fontSize: 12.0),
-              )
-            ],
-          ),
-        ));
+            );
+          
   }
 
   Widget buildNewDestinationWidget() {
     return EaseInWidget(
       onTap: () {
-        selectDestination(null);
+        rideNow();
       },
       child: Container(
         alignment: Alignment.center,
-        margin: EdgeInsets.all(12.0),
+        margin: EdgeInsets.all(10.0),
         padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 28.0),
         decoration: BoxDecoration(
             color: Colors.white,
@@ -186,10 +121,10 @@ class _DestinationSelctionWidgetState extends State<DestinationSelctionWidget>
     );
   }
 
-  void selectDestination(LatLng position) async {
+  void rideNow() async {
     await animationController.reverse(from: 1.0);
     BlocProvider.of<TaxiBookingBloc>(context)
-        .add(DestinationSelectedEvent(destination: position));
+        .add(RideNowEvent());
   }
 
   @override

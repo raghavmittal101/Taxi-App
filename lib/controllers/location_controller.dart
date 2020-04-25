@@ -2,16 +2,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxi_app/models/google_location.dart';
 
 class LocationController {
-  static Future<GoogleLocation> getCurrentLocation() async {
-//    Raghav: here we will we get input from fields given in frontend(current address) and use google to get corresponding latlong
-    return GoogleLocation("s9etojwM5hDVGK6U7",
-        LatLng(28.6472799,76.8130644), "Delhi");
-  }
-
-  static Future<GoogleLocation> getLocationfromId(LatLng position) async {
-//    Raghav: here we will we get input from fields given in frontend(destination address) and use google to get corresponding latlong
-    return GoogleLocation("sdKetGNVCKhe6HV78",
-        LatLng(28.6998822,77.2549408), "Noida");
+  static var locations = {
+  "location 1": LatLng(28.6472799,76.8130644),
+  "location 2": LatLng(28.6998822,77.2549408),
+  "location 3": LatLng(28.7000, 76.7)};  
+  
+  static getLocationFromString(String locationName) async {
+    return GoogleLocation(locations[locationName], locationName);
   }
 
   static Future<List<LatLng>> getPolylines(LatLng start, LatLng end) async {

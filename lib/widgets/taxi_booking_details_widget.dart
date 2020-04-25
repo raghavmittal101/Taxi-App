@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_event.dart';
-import 'package:taxi_app/bloc/taxi_booking_state.dart';
-import 'package:taxi_app/models/google_location.dart';
-import 'package:taxi_app/models/taxi_booking.dart';
 import 'package:taxi_app/widgets/rounded_button.dart';
 
 class TaxiBookingDetailsWidget extends StatefulWidget {
@@ -14,15 +11,12 @@ class TaxiBookingDetailsWidget extends StatefulWidget {
 }
 
 class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
-  GoogleLocation source, destination;
+  // GoogleLocation source, destination;
+  final sourceController = TextEditingController();
+  final destinationController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    TaxiBooking taxiBooking = (BlocProvider.of<TaxiBookingBloc>(context).state
-            as DetailsNotFilledState)
-        .booking;
-    source = taxiBooking.source;
-    destination = taxiBooking.destination;
   }
 
   @override
@@ -47,16 +41,11 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
                   SizedBox(
                     height: 24.0,
                   ),
-                  // raghav: remove soure?.areaDetails in order to get input from user
-                  buildInputWidget(source?.areaDetails, "hint", () {}),
-                  SizedBox(
-                    height: 16.0,
+                   TextField(
+                    controller: sourceController,
                   ),
-                  // raghav: remove destination?.areaDetails in order to get input from user
-                  buildInputWidget(destination?.areaDetails,
-                      "Enter your destination", () {}),
-                  SizedBox(
-                    height: 84.0,
+                  TextField(
+                    controller: destinationController,
                   ),
                   
                 ],
@@ -81,9 +70,9 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
                   text: "See Next",
                   onTap: () {
                     BlocProvider.of<TaxiBookingBloc>(context).add(
-                        DetailsSubmittedEvent(
-                            destination: destination,
-                            source: source,));
+                        DestinationDetailsEnteredEvent(
+                            destination: destinationController.text,
+                            source: sourceController.text,));
                   },
                 ),
               )

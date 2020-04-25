@@ -1,7 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-// raghav: change locations names
-enum UserLocationType { Home, Office }
+enum UserLocationType { LocationA, LocationB, LocationC, LocationD }
 
 class UserLocation {
   final String name;

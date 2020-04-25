@@ -3,10 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:taxi_app/bloc/taxi_booking_event.dart';
 import 'package:taxi_app/bloc/taxi_booking_state.dart';
 import 'package:taxi_app/controllers/location_controller.dart';
-// import 'package:taxi_app/controllers/payment_method_controller.dart';
 import 'package:taxi_app/controllers/taxi_booking_controller.dart';
 import 'package:taxi_app/models/google_location.dart';
-// import 'package:taxi_app/models/payment_method.dart';
 import 'package:taxi_app/models/taxi.dart';
 import 'package:taxi_app/models/taxi_booking.dart';
 import 'package:taxi_app/models/taxi_driver.dart';
@@ -23,28 +21,26 @@ class TaxiBookingBloc extends Bloc<TaxiBookingEvent, TaxiBookingState> {
       List<Taxi> taxis = await TaxiBookingController.getTaxisAvailable();
       yield TaxiBookingNotSelectedState(taxisAvailable: taxis);
     }
-    if (event is DestinationSelectedEvent) {
+    if (event is RideNowEvent) {
       TaxiBookingStorage.open();
       debugPrint("event2");
       yield TaxiBookingLoadingState(
           state: DetailsNotFilledState(booking: null));
-
-      GoogleLocation source = await LocationController.getCurrentLocation();
-      GoogleLocation destination =
-          await LocationController.getLocationfromId(event.destination);
-      await TaxiBookingStorage.addDetails(TaxiBooking.named(
-          source: source, destination: destination));
       TaxiBooking taxiBooking = await TaxiBookingStorage.getTaxiBooking();
       yield DetailsNotFilledState(booking: taxiBooking);
-    }
-    if (event is DetailsSubmittedEvent) {
+      }
+    if(event is DestinationDetailsEnteredEvent){
       debugPrint("event3");
-      yield TaxiBookingLoadingState(state: TaxiNotSelectedState(booking: null));
-      await Future.delayed(Duration(seconds: 1));
+      GoogleLocation source = await LocationController.getLocationFromString(event.source);
+      debugPrint(source.areaDetails);
+      GoogleLocation destination =
+          await LocationController.getLocationFromString(event.destination);
+      debugPrint(destination.position.toString());
       await TaxiBookingStorage.addDetails(TaxiBooking.named(
-        source: event.source,
-        destination: event.destination
-      ));
+          source: source, destination: destination));
+      debugPrint("event3.1");
+
+      // event = DetailsSubmittedEvent(destination: destination, source: source);
       TaxiBooking booking = await TaxiBookingStorage.getTaxiBooking();
       yield TaxiNotSelectedState(
         booking: booking,
@@ -52,14 +48,13 @@ class TaxiBookingBloc extends Bloc<TaxiBookingEvent, TaxiBookingState> {
       TaxiBooking prevBooking = await TaxiBookingStorage.getTaxiBooking();
       double price = await TaxiBookingController.getPrice(prevBooking);
       await TaxiBookingStorage.addDetails(
-          TaxiBooking.named(estimatedPrice: price));      
+          TaxiBooking.named(estimatedPrice: price));   
     }
     
     if(event is TaxiSelectedEvent){
       TaxiBooking booking = await TaxiBookingStorage.getTaxiBooking();
       TaxiDriver taxiDriver =
           await TaxiBookingController.getTaxiDriver(booking);
-      // yield TaxiNotConfirmedState(booking: booking, driver: taxiDriver);
       await Future.delayed(Duration(seconds: 1));
       yield TaxiBookingConfirmedState(booking: booking, driver: taxiDriver);
       await Future.delayed(Duration(seconds: 8));

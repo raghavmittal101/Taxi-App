@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxi_app/models/google_location.dart';
 
 abstract class TaxiBookingEvent extends Equatable {
@@ -12,13 +11,19 @@ class TaxiBookingStartEvent extends TaxiBookingEvent {
   List<Object> get props => null;
 }
 
-class DestinationSelectedEvent extends TaxiBookingEvent {
-  final LatLng destination;
+class DestinationDetailsEnteredEvent extends TaxiBookingEvent {
+  final String source;
+  final String destination;
 
-  DestinationSelectedEvent({@required this.destination});
+  DestinationDetailsEnteredEvent({@required this.source, @required this.destination});
 
   @override
-  List<Object> get props => [destination];
+  List<Object> get props => [source, destination];
+}
+
+class RideNowEvent extends TaxiBookingEvent {
+  @override
+  List<Object> get props => null;
 }
 
 class DetailsSubmittedEvent extends TaxiBookingEvent {
