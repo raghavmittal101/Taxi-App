@@ -11,6 +11,7 @@ class LocationController {
 
   static var locationDetails = DataManager.getLocationData();
   static var zoneDetails = DataManager.getZoneDetails();
+  static var taxis = DataManager.getTaxis();
 
   static getLocationFromString(String locationName) async {
     for(var k in locationDetails.keys){
@@ -71,5 +72,15 @@ class LocationController {
       }
     }
     return "1";
+  }
+
+  static String getZoneFromTaxiName(String taxiName){
+    for(var k in taxis.keys){
+      var v = taxis[k];
+      if(v["title"] == taxiName){
+        return v["zone"];
+      }
+    }
+    return "0";
   }
 }

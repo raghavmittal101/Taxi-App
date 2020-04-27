@@ -114,7 +114,6 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
   }
   
   Widget buildInputWidget(String text, String hint, Function() onTap) {
-    // raghav: here we need to create a input field for getting address from user
     return Container(
       padding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
       decoration: BoxDecoration(

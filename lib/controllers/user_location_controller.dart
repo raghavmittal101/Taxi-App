@@ -2,7 +2,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxi_app/models/user_location.dart';
 
 class UserLocationController {
-  // raghav: change the locations to the locations which we will use for demo
   static Future<List<UserLocation>> getSavedLocations() async {
     return [
       UserLocation.named(

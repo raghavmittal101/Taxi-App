@@ -90,10 +90,10 @@ class _TaxiMapState extends State<TaxiMap> {
           onMapCreated: (controller) async {
             this.controller = controller;
             BlocProvider.of<TaxiBookingBloc>(context)
-                .add(TaxiBookingStartEvent()); // get list of available taxis
+                .add(TaxiBookingStartEvent());
           },
           myLocationButtonEnabled: false,
-          markers: markers, //raghav: here we need to edit to add zone info with markers
+          markers: markers,
           polylines: polylines,
           circles: circles,
         ),
@@ -113,7 +113,7 @@ class _TaxiMapState extends State<TaxiMap> {
         position: LatLng(taxi.position.latitude, taxi.position.longitude),
         infoWindow: InfoWindow(
           title: taxi.title,
-          snippet: "zone:"+"${LocationController.getZoneforPosition(taxi.position)}"
+          snippet: "zone:"+"${LocationController.getZoneFromTaxiName(taxi.title)}"
         ),
         icon: descriptor,
       ));
@@ -131,12 +131,12 @@ class _TaxiMapState extends State<TaxiMap> {
       position: position,
       infoWindow: InfoWindow(
         title: title,
-        snippet: "zone:"+"${LocationController.getZoneforPosition(position)}",
+        // snippet: "zone:"+"${LocationController.getZoneFromTaxiName()}",
       ),
       icon: descriptor,
     );
   }
-  
+
   Future<List<LatLng>> getPolylines(LatLng start, LatLng end) async {
     debugPrint("taxi_map.dart: getPolylines(start:"+start.toString() +", end:"+end.toString()+")");
     return [start, end];

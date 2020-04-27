@@ -8,8 +8,7 @@ class TaxiBookingController {
   static var taxiDrivers = DataManager.getTaxiDrivers();
 
   static var taxis = DataManager.getTaxis();
-
-  // raghav: update this function to get taxi price from taxi booking controller
+  
   static Future<double> getPrice(TaxiBooking taxiBooking) async {
     return 150;
   }
@@ -46,9 +45,10 @@ class TaxiBookingController {
       taxisAvailable.add(
         Taxi.named(
           id: v["id"],
-          position: v["position"],
           title: v["title"],
+          isAvailable: true,
           plateNo: v["plateNo"],
+          position: v["position"],
           )
       );
     });
