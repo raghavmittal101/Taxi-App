@@ -1,5 +1,6 @@
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart';
 
 class DataManager{
   static getLocationData(){
@@ -88,4 +89,29 @@ class DataManager{
     return drivers;
   }
 
+  static final Map<String, String> endPoints = {
+  "getAvailableTaxis" : "http://localhost/posts",
+  "allocateTaxi" : "http://localhost/posts",
+  };
+static Future<String> allocateTaxi(String source, String destination) async
+  {
+     // set up POST request arguments
+      String url = endPoints["allocateTaxi"];
+      Map<String, String> headers = {"Content-type": "application/json"};
+      String json = '{"sourceLocation":'+ source+', "destination":'+ destination+'}';
+      // make POST request
+      Response response = await post(url, headers: headers, body: json);
+      // check the status code for the result
+      int statusCode = response.statusCode;
+      // this API passes back the id of the new item added to the body
+      String body = response.body;
+      return body;
+  }
+
+  Future<String> getAvailableTaxis() async{
+    String url = endPoints["getAvailableTaxis"];
+    Response response = await get(url);
+    String body = response.body;
+    return body;
+  }
 }

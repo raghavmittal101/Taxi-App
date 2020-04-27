@@ -1,7 +1,4 @@
-// import 'package:flutter/cupertino.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:taxi_app/controllers/location_controller.dart';
-// import 'package:taxi_app/bloc/taxi_booking_bloc.dart';
 import 'package:taxi_app/models/taxi.dart';
 import 'package:taxi_app/models/taxi_booking.dart';
 import 'package:taxi_app/models/taxi_driver.dart';
