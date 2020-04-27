@@ -131,7 +131,7 @@ class _TaxiBookingNotConfirmedWidgetState
               height: 4.0,
             ),
             Text(
-              "${driver.taxiDetails}",
+              "${driver.taxiDetails.title} ${driver.taxiDetails.plateNo}",
               style: Theme.of(context).textTheme.subtitle,
             )
           ],
@@ -152,10 +152,6 @@ class _TaxiBookingNotConfirmedWidgetState
                 color: Colors.yellow,
                 size: 20.0,
               ),
-              Text(
-                "${driver.driverRating}",
-                style: Theme.of(context).textTheme.title,
-              ),
             ],
           ),
         )
@@ -175,7 +171,7 @@ class _TaxiBookingNotConfirmedWidgetState
           children: <Widget>[
             buildIconText("21 km", Icons.directions),
             buildIconText("1-3", Icons.person_outline),
-            buildIconText("\$150", Icons.monetization_on),
+            // buildIconText("\$150", Icons.monetization_on),
           ],
         ),
         SizedBox(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:location/location.dart';
 import 'package:taxi_app/bloc/taxi_booking_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_event.dart';
 import 'package:taxi_app/bloc/taxi_booking_state.dart';
@@ -62,12 +63,13 @@ class _TaxiMapState extends State<TaxiMap> {
 
             TaxiBooking booking = (state).booking;
             addPolylines(booking.source.position, booking.destination.position);
+            debugPrint("locations in widget: "+booking.source.position.toString() +" -- "+ booking.destination.position.toString());
           }
           if (state is TaxiNotConfirmedState) {
             clearData();
-
             TaxiBooking booking = (state).booking;
             addPolylines(booking.source.position, booking.destination.position);
+            debugPrint("locations in widget 2: "+booking.source.position.toString() +" -- "+ booking.destination.position.toString());
           }
         },
         child: GoogleMap(
@@ -99,6 +101,7 @@ class _TaxiMapState extends State<TaxiMap> {
         position: LatLng(taxi.position.latitude, taxi.position.longitude),
         infoWindow: InfoWindow(
           title: taxi.title,
+          snippet: "zone:"+"${LocationController.getZoneforPosition(taxi.position)}"
         ),
         icon: descriptor,
       ));
@@ -116,6 +119,7 @@ class _TaxiMapState extends State<TaxiMap> {
       position: position,
       infoWindow: InfoWindow(
         title: title,
+        snippet: "zone:"+"${LocationController.getZoneforPosition(position)}",
       ),
       icon: descriptor,
     );

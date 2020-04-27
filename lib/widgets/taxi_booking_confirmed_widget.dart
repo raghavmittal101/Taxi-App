@@ -5,6 +5,8 @@ import 'package:taxi_app/bloc/taxi_booking_state.dart';
 import 'package:taxi_app/models/taxi_booking.dart';
 import 'package:taxi_app/models/taxi_driver.dart';
 import 'package:taxi_app/widgets/taxi_booking_cancellation_dialog.dart';
+import 'package:taxi_app/controllers/location_controller.dart';
+// import 'package:taxi_app/controllers/taxi_booking_controller.dart';
 
 class TaxiBookingConfirmedWidget extends StatefulWidget {
   @override
@@ -130,7 +132,11 @@ class _TaxiBookingConfirmedWidgetState extends State<TaxiBookingConfirmedWidget>
               height: 4.0,
             ),
             Text(
-              "${driver.taxiDetails}",
+              "${driver.taxiDetails.title} ${driver.taxiDetails.plateNo}",
+              style: Theme.of(context).textTheme.subtitle,
+            ),
+            Text(
+              "zone: "+"${LocationController.getZoneforPosition(driver.taxiDetails.position)}",
               style: Theme.of(context).textTheme.subtitle,
             )
           ],
@@ -150,10 +156,6 @@ class _TaxiBookingConfirmedWidgetState extends State<TaxiBookingConfirmedWidget>
                 Icons.star,
                 color: Colors.yellow,
                 size: 20.0,
-              ),
-              Text(
-                "${driver.driverRating}",
-                style: Theme.of(context).textTheme.title,
               ),
             ],
           ),

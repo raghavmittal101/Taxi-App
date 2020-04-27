@@ -33,9 +33,8 @@ class TaxiBookingBloc extends Bloc<TaxiBookingEvent, TaxiBookingState> {
       debugPrint("event3");
       GoogleLocation source = await LocationController.getLocationFromString(event.source);
       debugPrint(source.areaDetails);
-      GoogleLocation destination =
-          await LocationController.getLocationFromString(event.destination);
-      debugPrint(destination.position.toString());
+      GoogleLocation destination = await LocationController.getLocationFromString(event.destination);
+      debugPrint(destination.areaDetails);
       await TaxiBookingStorage.addDetails(TaxiBooking.named(
           source: source, destination: destination));
       debugPrint("event3.1");

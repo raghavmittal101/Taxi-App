@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_event.dart';
 import 'package:taxi_app/bloc/taxi_booking_state.dart';
+import 'package:taxi_app/controllers/location_controller.dart';
+// import 'package:taxi_app/controllers/taxi_booking_controller.dart';
 import 'package:taxi_app/models/taxi_booking.dart';
 import 'package:taxi_app/widgets/rounded_button.dart';
 
@@ -106,9 +108,11 @@ class _TaxiBookingTaxisWidgetState extends State<TaxiBookingTaxisWidget> {
           children: <Widget>[
             // raghav: we need to calculate real distance and prices here
             // we need to use an existing function from taxi_nooking_controller` to calculate price
-            buildIconText("21 km", Icons.directions),
-            buildIconText("1-3", Icons.person_outline),
-            buildIconText("\$150", Icons.monetization_on),
+            // buildIconText("21 km", Icons.directions),
+            // buildIconText("1-3", Icons.person_outline),
+            // buildIconText("\$150", Icons.monetization_on),
+            buildIconText("from zone: "+ LocationController.getZoneSeverity(taxiBooking.source.areaDetails), Icons.my_location),
+            buildIconText("to zone: "+LocationController.getZoneSeverity(taxiBooking.destination.areaDetails), Icons.location_on)
           ],
         ),
         SizedBox(

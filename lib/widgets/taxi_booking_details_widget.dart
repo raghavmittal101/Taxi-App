@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_bloc.dart';
 import 'package:taxi_app/bloc/taxi_booking_event.dart';
+import 'package:taxi_app/controllers/location_controller.dart';
+// import 'package:taxi_app/controllers/taxi_booking_controller.dart';
 import 'package:taxi_app/widgets/rounded_button.dart';
 
 class TaxiBookingDetailsWidget extends StatefulWidget {
@@ -43,9 +45,18 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
                   ),
                    TextField(
                     controller: sourceController,
+                    decoration: InputDecoration(
+                      labelText: "your location", 
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
                   ),
                   TextField(
                     controller: destinationController,
+                    decoration: InputDecoration(
+                      labelText: "destination location", 
+                    ),
                   ),
                   
                 ],
@@ -69,11 +80,16 @@ class _TaxiBookingDetailsWidgetState extends State<TaxiBookingDetailsWidget> {
                 child: RoundedButton(
                   text: "See Next",
                   onTap: () {
+                    if(destinationController.text != sourceController.text &&
+        LocationController.getZoneSeverity(destinationController.text) == LocationController.getZoneSeverity(sourceController.text))
+                    {
                     BlocProvider.of<TaxiBookingBloc>(context).add(
-                        DestinationDetailsEnteredEvent(
-                            destination: destinationController.text,
-                            source: sourceController.text,));
-                  },
+                     DestinationDetailsEnteredEvent(
+                       destination: destinationController.text,
+                      source: sourceController.text));
+                    }
+                  }
+                  
                 ),
               )
             ],
