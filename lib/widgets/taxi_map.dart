@@ -62,14 +62,26 @@ class _TaxiMapState extends State<TaxiMap> {
             clearData();
 
             TaxiBooking booking = (state).booking;
+            debugPrint("taxi_map.dart: Widget build> if(state is TaxiBookingConfirmedState){start.position:"
+                        +booking.source.position.toString() 
+                        +", end.position:"+booking.destination.position.toString()+"}");
+            debugPrint("taxi_map.dart: Widget build> if(state is TaxiBookingConfirmedState){start.areaDetails:"
+                        +booking.source.areaDetails.toString() 
+                        +", end.areaDetails:"+booking.destination.areaDetails.toString()+"}");
+
             addPolylines(booking.source.position, booking.destination.position);
-            debugPrint("locations in widget: "+booking.source.position.toString() +" -- "+ booking.destination.position.toString());
           }
           if (state is TaxiNotConfirmedState) {
             clearData();
             TaxiBooking booking = (state).booking;
+            debugPrint("taxi_map.dart: Widget build> if(state is TaxiNotConfirmedState){start.position:"
+                        +booking.source.position.toString() 
+                        +", end.position:"+booking.destination.position.toString()+"}");
+            debugPrint("taxi_map.dart: Widget build> if(state is TaxiNotConfirmedState){start.areaDetails:"
+                        +booking.source.areaDetails.toString() 
+                        +", end.areaDetails:"+booking.destination.areaDetails.toString()+"}");
+
             addPolylines(booking.source.position, booking.destination.position);
-            debugPrint("locations in widget 2: "+booking.source.position.toString() +" -- "+ booking.destination.position.toString());
           }
         },
         child: GoogleMap(
@@ -124,10 +136,15 @@ class _TaxiMapState extends State<TaxiMap> {
       icon: descriptor,
     );
   }
+  
+  Future<List<LatLng>> getPolylines(LatLng start, LatLng end) async {
+    debugPrint("taxi_map.dart: getPolylines(start:"+start.toString() +", end:"+end.toString()+")");
+    return [start, end];
+  }
 
   Future<void> addPolylines(LatLng start, LatLng end) async {
-    List<LatLng> result = await LocationController.getPolylines(start, end);
-
+    debugPrint("taxi_map.dart: addPolylines(start:"+start.toString() +", end:"+end.toString()+")");
+    List<LatLng> result = await getPolylines(start, end);
     setState(() {});
     Marker startM = await createMarker(Colors.black, start, "Start");
     Marker endM = await createMarker(Colors.black, end, "End");

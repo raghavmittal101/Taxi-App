@@ -11,8 +11,4 @@
 //     _userLocation = _userLocation.copyWith(userLocation);
 //     return _userLocation;
 //   }
-
-//   static Future<UserLoca> getTaxiBooking() async {
-//     return _taxiBooking;
-//   }
 // }

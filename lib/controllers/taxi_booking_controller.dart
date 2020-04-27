@@ -5,64 +5,12 @@ import 'package:taxi_app/controllers/location_controller.dart';
 import 'package:taxi_app/models/taxi.dart';
 import 'package:taxi_app/models/taxi_booking.dart';
 import 'package:taxi_app/models/taxi_driver.dart';
+import 'package:taxi_app/repository/data_manager.dart';
 
 class TaxiBookingController {
-  static var taxiDrivers = {
-    1: {
-      "driverPic": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Sidhu_in_Punjab.jpg/440px-Sidhu_in_Punjab.jpg",
-      "driverName": "Kapoor",
-      "taxiDetails": taxis[4],
-      "zone":"2"
-      },
-     2: {
-      "driverPic":
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Sidhu_in_Punjab.jpg/440px-Sidhu_in_Punjab.jpg",
-        "driverName": "David",
-        "taxiDetails": taxis[1],
-        "zone": "1"
-      },
-     3: {
-        "driverPic":
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Sidhu_in_Punjab.jpg/440px-Sidhu_in_Punjab.jpg",
-        "driverName": "Gopi",
-        "taxiDetails": taxis[2],
-        "zone": "2"
-        },
-     4: {
-          "driverPic":
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Sidhu_in_Punjab.jpg/440px-Sidhu_in_Punjab.jpg",
-        "driverName": "Sibin",
-        "taxiDetails": taxis[3],
-        "zone": "3"
-        }
-  };
+  static var taxiDrivers = DataManager.getTaxiDrivers();
 
-  static var taxis = {
-      1 :{
-      "id": '1',
-      "position": LatLng(27,77),
-      "title": "Taxi 1",
-      "plateNo": "1231"
-      },
-      2 : {
-      "id": '2',
-      "position": LatLng(27.01, 78),
-      "title": "Taxi 2",
-      "plateNo": "3212"
-      },
-      3: {
-      "id": '3',
-      "position": LatLng(28, 77),
-      "title": "Taxi 3",
-      "plateNo": "9090"
-      },
-      4: {
-      "id": '4',
-      "position": LatLng(28, 78),
-      "title": "Taxi 4",
-      "plateNo": "8383"
-      }
-    };
+  static var taxis = DataManager.getTaxis();
 
   // raghav: update this function to get taxi price from taxi booking controller
   static Future<double> getPrice(TaxiBooking taxiBooking) async {
