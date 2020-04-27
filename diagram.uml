@@ -20,19 +20,23 @@ class "taxi_app::bloc::taxi_booking_event.dart::TaxiBookingStartEvent" {
 
 "taxi_app::bloc::taxi_booking_event.dart::TaxiBookingEvent" <|-- "taxi_app::bloc::taxi_booking_event.dart::TaxiBookingStartEvent"
 
-class "taxi_app::bloc::taxi_booking_event.dart::DestinationSelectedEvent" {
-  +LatLng destination
+class "taxi_app::bloc::taxi_booking_event.dart::DestinationDetailsEnteredEvent" {
+  +String source
+  +String destination
   +List<Object> props
 }
 
-"taxi_app::bloc::taxi_booking_event.dart::DestinationSelectedEvent" o-- "google_maps_flutter::google_maps_flutter.dart::LatLng"
-"taxi_app::bloc::taxi_booking_event.dart::TaxiBookingEvent" <|-- "taxi_app::bloc::taxi_booking_event.dart::DestinationSelectedEvent"
+"taxi_app::bloc::taxi_booking_event.dart::TaxiBookingEvent" <|-- "taxi_app::bloc::taxi_booking_event.dart::DestinationDetailsEnteredEvent"
+
+class "taxi_app::bloc::taxi_booking_event.dart::RideNowEvent" {
+  +List<Object> props
+}
+
+"taxi_app::bloc::taxi_booking_event.dart::TaxiBookingEvent" <|-- "taxi_app::bloc::taxi_booking_event.dart::RideNowEvent"
 
 class "taxi_app::bloc::taxi_booking_event.dart::DetailsSubmittedEvent" {
   +GoogleLocation source
   +GoogleLocation destination
-  +int noOfPersons
-  +DateTime bookingTime
   +List<Object> props
 }
 
@@ -40,20 +44,10 @@ class "taxi_app::bloc::taxi_booking_event.dart::DetailsSubmittedEvent" {
 "taxi_app::bloc::taxi_booking_event.dart::TaxiBookingEvent" <|-- "taxi_app::bloc::taxi_booking_event.dart::DetailsSubmittedEvent"
 
 class "taxi_app::bloc::taxi_booking_event.dart::TaxiSelectedEvent" {
-  +TaxiType taxiType
   +List<Object> props
 }
 
-"taxi_app::bloc::taxi_booking_event.dart::TaxiSelectedEvent" o-- "taxi_app::models::taxi_type.dart::TaxiType"
 "taxi_app::bloc::taxi_booking_event.dart::TaxiBookingEvent" <|-- "taxi_app::bloc::taxi_booking_event.dart::TaxiSelectedEvent"
-
-class "taxi_app::bloc::taxi_booking_event.dart::PaymentMadeEvent" {
-  +PaymentMethod paymentMethod
-  +List<Object> props
-}
-
-"taxi_app::bloc::taxi_booking_event.dart::PaymentMadeEvent" o-- "taxi_app::models::payment_method.dart::PaymentMethod"
-"taxi_app::bloc::taxi_booking_event.dart::TaxiBookingEvent" <|-- "taxi_app::bloc::taxi_booking_event.dart::PaymentMadeEvent"
 
 class "taxi_app::bloc::taxi_booking_event.dart::BackPressedEvent" {
   +List<Object> props
@@ -101,15 +95,6 @@ class "taxi_app::bloc::taxi_booking_state.dart::TaxiNotSelectedState" {
 "taxi_app::bloc::taxi_booking_state.dart::TaxiNotSelectedState" o-- "taxi_app::models::taxi_booking.dart::TaxiBooking"
 "taxi_app::bloc::taxi_booking_state.dart::TaxiBookingState" <|-- "taxi_app::bloc::taxi_booking_state.dart::TaxiNotSelectedState"
 
-class "taxi_app::bloc::taxi_booking_state.dart::PaymentNotInitializedState" {
-  +TaxiBooking booking
-  +List<PaymentMethod> methodsAvaiable
-  +List<Object> props
-}
-
-"taxi_app::bloc::taxi_booking_state.dart::PaymentNotInitializedState" o-- "taxi_app::models::taxi_booking.dart::TaxiBooking"
-"taxi_app::bloc::taxi_booking_state.dart::TaxiBookingState" <|-- "taxi_app::bloc::taxi_booking_state.dart::PaymentNotInitializedState"
-
 class "taxi_app::bloc::taxi_booking_state.dart::TaxiNotConfirmedState" {
   +TaxiDriver driver
   +TaxiBooking booking
@@ -154,9 +139,20 @@ class "taxi_app::bloc::taxi_booking_state.dart::TaxiBookingConfirmedState" {
 "taxi_app::bloc::taxi_booking_state.dart::TaxiBookingConfirmedState" o-- "taxi_app::models::taxi_booking.dart::TaxiBooking"
 "taxi_app::bloc::taxi_booking_state.dart::TaxiBookingState" <|-- "taxi_app::bloc::taxi_booking_state.dart::TaxiBookingConfirmedState"
 
+class "taxi_app::bloc::taxi_booking_state.dart::TaxiRideCompleteState" {
+  +List<Object> props
+}
+
+"taxi_app::bloc::taxi_booking_state.dart::TaxiBookingState" <|-- "taxi_app::bloc::taxi_booking_state.dart::TaxiRideCompleteState"
+
 class "taxi_app::controllers::location_controller.dart::LocationController" {
-  {static} +Future getCurrentLocation()
-  {static} +Future getLocationfromId()
+  {static} +Map<int, Map<String, Object>> locationDetails
+  {static} +Map<int, Map<String, Object>> zoneDetails
+  {static} +dynamic getLocationFromString()
+  {static} +String getZoneSeverity()
+  {static} +String getLocationNameFromPosition()
+  {static} +dynamic getDistance()
+  {static} +String getZoneforPosition()
   {static} +Future getPolylines()
 }
 
@@ -165,7 +161,10 @@ class "taxi_app::controllers::payment_method_controller.dart::PaymentMethodContr
 }
 
 class "taxi_app::controllers::taxi_booking_controller.dart::TaxiBookingController" {
+  {static} +Map<int, Map<String, Object>> taxiDrivers
+  {static} +Map<int, Map<String, Object>> taxis
   {static} +Future getPrice()
+  {static} +dynamic getTaxiDetails()
   {static} +Future getTaxiDriver()
   {static} +Future getTaxisAvailable()
 }
@@ -179,7 +178,6 @@ class "taxi_app::controllers::user_controller.dart::UserController" {
 }
 
 class "taxi_app::controllers::user_location_controller.dart::UserLocationController" {
-  {static} +Future getCurrentLocation()
   {static} +Future getSavedLocations()
 }
 
@@ -190,9 +188,9 @@ class "taxi_app::main.dart::MyApp" {
 "flutter::src::widgets::framework.dart::StatelessWidget" <|-- "taxi_app::main.dart::MyApp"
 
 class "taxi_app::models::google_location.dart::GoogleLocation" {
-  +String placeId
   +LatLng position
   +String areaDetails
+  +String zone
 }
 
 "taxi_app::models::google_location.dart::GoogleLocation" o-- "google_maps_flutter::google_maps_flutter.dart::LatLng"
@@ -212,12 +210,10 @@ class "taxi_app::models::taxi.dart::Taxi" {
   +String title
   +bool isAvailable
   +String plateNo
-  +TaxiType taxiType
   +LatLng position
   +List<Object> props
 }
 
-"taxi_app::models::taxi.dart::Taxi" o-- "taxi_app::models::taxi_type.dart::TaxiType"
 "taxi_app::models::taxi.dart::Taxi" o-- "google_maps_flutter::google_maps_flutter.dart::LatLng"
 "equatable::src::equatable.dart::Equatable" <|-- "taxi_app::models::taxi.dart::Taxi"
 
@@ -225,9 +221,6 @@ class "taxi_app::models::taxi_booking.dart::TaxiBooking" {
   +String id
   +GoogleLocation source
   +GoogleLocation destination
-  +int noOfPersons
-  +DateTime bookingTime
-  +TaxiType taxiType
   +double estimatedPrice
   +PaymentMethod paymentMethod
   +String promoApplied
@@ -235,29 +228,19 @@ class "taxi_app::models::taxi_booking.dart::TaxiBooking" {
 }
 
 "taxi_app::models::taxi_booking.dart::TaxiBooking" o-- "taxi_app::models::google_location.dart::GoogleLocation"
-"taxi_app::models::taxi_booking.dart::TaxiBooking" o-- "taxi_app::models::taxi_type.dart::TaxiType"
 "taxi_app::models::taxi_booking.dart::TaxiBooking" o-- "taxi_app::models::payment_method.dart::PaymentMethod"
 
 class "taxi_app::models::taxi_driver.dart::TaxiDriver" {
   +String id
   +String driverName
-  +double driverRating
-  +String taxiDetails
+  +Taxi taxiDetails
   +String driverPic
+  +String zone
   +List<Object> props
 }
 
+"taxi_app::models::taxi_driver.dart::TaxiDriver" o-- "taxi_app::models::taxi.dart::Taxi"
 "equatable::src::equatable.dart::Equatable" <|-- "taxi_app::models::taxi_driver.dart::TaxiDriver"
-
-class "taxi_app::models::taxi_type.dart::TaxiType" {
-  +int index
-  {static} +List<TaxiType> values
-  {static} +TaxiType Standard
-  {static} +TaxiType Premium
-  {static} +TaxiType Platinum
-}
-
-"taxi_app::models::taxi_type.dart::TaxiType" o-- "taxi_app::models::taxi_type.dart::TaxiType"
 
 class "taxi_app::models::user.dart::User" {
   +String name
@@ -268,8 +251,10 @@ class "taxi_app::models::user.dart::User" {
 class "taxi_app::models::user_location.dart::UserLocationType" {
   +int index
   {static} +List<UserLocationType> values
-  {static} +UserLocationType Home
-  {static} +UserLocationType Office
+  {static} +UserLocationType LocationA
+  {static} +UserLocationType LocationB
+  {static} +UserLocationType LocationC
+  {static} +UserLocationType LocationD
 }
 
 "taxi_app::models::user_location.dart::UserLocationType" o-- "taxi_app::models::user_location.dart::UserLocationType"
@@ -330,9 +315,8 @@ class "taxi_app::widgets::destination_selection_widget.dart::_DestinationSelctio
   +void initState()
   +Future loadDestinations()
   +Widget build()
-  +Widget buildDestinationWidget()
   +Widget buildNewDestinationWidget()
-  +void selectDestination()
+  +void rideNow()
   +void dispose()
 }
 
@@ -455,20 +439,15 @@ class "taxi_app::widgets::taxi_booking_details_widget.dart::TaxiBookingDetailsWi
 "flutter::src::widgets::framework.dart::StatefulWidget" <|-- "taxi_app::widgets::taxi_booking_details_widget.dart::TaxiBookingDetailsWidget"
 
 class "taxi_app::widgets::taxi_booking_details_widget.dart::_TaxiBookingDetailsWidgetState" {
-  +GoogleLocation source
-  +GoogleLocation destination
-  +int noOfPersons
-  +DateTime bookingTime
+  +TextEditingController sourceController
+  +TextEditingController destinationController
   +void initState()
   +Widget build()
-  +Widget buildPersonSelector()
-  +Widget buildTimeSelector()
   +Widget buildContainer()
-  +Widget buildTimeContainer()
   +Widget buildInputWidget()
 }
 
-"taxi_app::widgets::taxi_booking_details_widget.dart::_TaxiBookingDetailsWidgetState" o-- "taxi_app::models::google_location.dart::GoogleLocation"
+"taxi_app::widgets::taxi_booking_details_widget.dart::_TaxiBookingDetailsWidgetState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
 "flutter::src::widgets::framework.dart::State<T>" <|-- "taxi_app::widgets::taxi_booking_details_widget.dart::_TaxiBookingDetailsWidgetState"
 
 class "taxi_app::widgets::taxi_booking_home_widget.dart::TaxiBookingHomeWidget" {
@@ -519,10 +498,8 @@ class "taxi_app::widgets::taxi_booking_payments_widget.dart::TaxiBookingPayments
 class "taxi_app::widgets::taxi_booking_payments_widget.dart::_TaxiBookingPaymentsWidgetState" {
   +List<PaymentMethod> methods
   +PaymentMethod selectedMethod
-  +void initState()
   +Widget build()
   +Widget buildPaymentMethod()
-  +Widget buildInputWidget()
 }
 
 "taxi_app::widgets::taxi_booking_payments_widget.dart::_TaxiBookingPaymentsWidgetState" o-- "taxi_app::models::payment_method.dart::PaymentMethod"
@@ -543,18 +520,15 @@ class "taxi_app::widgets::taxi_booking_taxis_widget.dart::TaxiBookingTaxisWidget
 
 class "taxi_app::widgets::taxi_booking_taxis_widget.dart::_TaxiBookingTaxisWidgetState" {
   +TaxiBooking taxiBooking
-  +List<TaxiType> taxiTypes
-  +TaxiType selectedTaxiType
   +void initState()
   +Widget build()
-  +Widget buildTaxis()
   +Widget buildPriceDetails()
   +Widget buildIconText()
   +Widget buildLocation()
+  +Widget buildPaymentMethod()
 }
 
 "taxi_app::widgets::taxi_booking_taxis_widget.dart::_TaxiBookingTaxisWidgetState" o-- "taxi_app::models::taxi_booking.dart::TaxiBooking"
-"taxi_app::widgets::taxi_booking_taxis_widget.dart::_TaxiBookingTaxisWidgetState" o-- "taxi_app::models::taxi_type.dart::TaxiType"
 "flutter::src::widgets::framework.dart::State<T>" <|-- "taxi_app::widgets::taxi_booking_taxis_widget.dart::_TaxiBookingTaxisWidgetState"
 
 class "taxi_app::widgets::taxi_map.dart::TaxiMap" {
@@ -582,6 +556,25 @@ class "taxi_app::widgets::taxi_map.dart::_TaxiMapState" {
 "taxi_app::widgets::taxi_map.dart::_TaxiMapState" o-- "google_maps_flutter::google_maps_flutter.dart::GoogleMapController"
 "taxi_app::widgets::taxi_map.dart::_TaxiMapState" o-- "taxi_app::models::google_location.dart::GoogleLocation"
 "flutter::src::widgets::framework.dart::State<T>" <|-- "taxi_app::widgets::taxi_map.dart::_TaxiMapState"
+
+class "taxi_app::widgets::taxi_ride_complete_widget.dart::TaxiRideCompleteWidget" {
+  +_TaxiRideCompleteWidgetState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "taxi_app::widgets::taxi_ride_complete_widget.dart::TaxiRideCompleteWidget"
+
+class "taxi_app::widgets::taxi_ride_complete_widget.dart::_TaxiRideCompleteWidgetState" {
+  +AnimationController animationController
+  +Animation animation
+  +void initState()
+  +Widget build()
+  +Widget buildDialog()
+}
+
+"taxi_app::widgets::taxi_ride_complete_widget.dart::_TaxiRideCompleteWidgetState" o-- "flutter::src::animation::animation_controller.dart::AnimationController"
+"taxi_app::widgets::taxi_ride_complete_widget.dart::_TaxiRideCompleteWidgetState" o-- "flutter::src::animation::animation.dart::Animation"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "taxi_app::widgets::taxi_ride_complete_widget.dart::_TaxiRideCompleteWidgetState"
+"flutter::src::widgets::ticker_provider.dart::TickerProviderStateMixin<T>" <|-- "taxi_app::widgets::taxi_ride_complete_widget.dart::_TaxiRideCompleteWidgetState"
 
 
 @enduml

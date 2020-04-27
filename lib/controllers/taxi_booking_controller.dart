@@ -10,14 +10,14 @@ class TaxiBookingController {
   static var taxiDrivers = {
     1: {
       "driverPic": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Sidhu_in_Punjab.jpg/440px-Sidhu_in_Punjab.jpg",
-      "driverName": "Ram kapoor",
+      "driverName": "Kapoor",
       "taxiDetails": taxis[4],
       "zone":"2"
       },
      2: {
       "driverPic":
             "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Sidhu_in_Punjab.jpg/440px-Sidhu_in_Punjab.jpg",
-        "driverName": "Pappu Yadav",
+        "driverName": "David",
         "taxiDetails": taxis[1],
         "zone": "1"
       },
